@@ -4,9 +4,8 @@
 #include <queue>
 #include <algorithm> //swap, max
 #include <math.h> //abs
-#include <utility> //pair do i even need this anymore?
 #include <tuple> //tuple
-#include <chrono> //time
+//#include <chrono> //time
 
 using namespace std;
 
@@ -50,7 +49,6 @@ void general_search(vector< vector<int> > matrix, int choice_num)
 
 	//print queue
 	cout << "Expanding state" << endl;
-	//vector<vector<int>> temp = nodes.top().second;
 	tuple<int, int, vector<vector<int>>> temp = nodes.top();
 	vector<vector<int>> temp1 = get<2>(temp);
 	for (int y = 0; y<3; y++)
@@ -64,6 +62,7 @@ void general_search(vector< vector<int> > matrix, int choice_num)
 	int max_size = 0;
 	while (counter != 0 && counter != 1)
 	{
+		//if queue is empty and solution has not been found
 		if (nodes.empty())
 		{
 			cout << "Failure: No solution found" << endl;
@@ -73,6 +72,7 @@ void general_search(vector< vector<int> > matrix, int choice_num)
 		temp = nodes.top();
 		get<2>(node) = get<2>(temp);
 		nodes.pop();
+		//if goal state has been found
 		if (goalcheck(get<2>(node)) == true)
 		{
 			cout << "Goal reached" << endl;
@@ -90,7 +90,6 @@ void general_search(vector< vector<int> > matrix, int choice_num)
 			return;
 		}
 		expand(temp, nodes, choice_num);
-		//cout << "size of queue " << nodes.size() << endl;
 		int curr_size = nodes.size();
 		max_size = max(max_size, curr_size);
 
@@ -124,12 +123,10 @@ bool goalcheck(vector< vector<int> > matrix)
 	goal[2][2] = 0;
 	if (matrix == goal)
 	{
-		//cout << "true" << endl;
 		return true;
 	}
 	else if (matrix != goal)
 	{
-		//cout << "false" << endl;
 		return false;
 	}
 }
@@ -151,7 +148,6 @@ void expand(tuple<int, int, vector<vector<int>>> node, priority_queue< tuple<int
 			}
 		}
 	}
-	//cout << "pos: " << blank_x << ", " << blank_y << endl;
 
 	//move up
 	vector<vector<int>> copy = mat;
@@ -176,7 +172,6 @@ void expand(tuple<int, int, vector<vector<int>>> node, priority_queue< tuple<int
 		get<1>(new_node) = get<1>(node) + 1;
 		get<2>(new_node) = copy;
 		total++;
-		//cout << "move up: " << get<0>(new_node) + get<1>(new_node) << endl;
 		nodes.push(new_node); //push children into queue
 	}
 
@@ -201,7 +196,6 @@ void expand(tuple<int, int, vector<vector<int>>> node, priority_queue< tuple<int
 		get<1>(new_node) = get<1>(node) +1;
 		get<2>(new_node) = copy;
 		total++;
-		//cout << "move down: " << get<0>(new_node) + get<1>(new_node) << endl;
 		nodes.push(new_node);
 	}
 
@@ -226,7 +220,6 @@ void expand(tuple<int, int, vector<vector<int>>> node, priority_queue< tuple<int
 		get<1>(new_node) = get<1>(node) +1;
 		get<2>(new_node) = copy;
 		total++;
-		//cout << "move right: " << get<0>(new_node) + get<1>(new_node) << endl;
 		nodes.push(new_node);
 	}
 	//move left
@@ -250,7 +243,6 @@ void expand(tuple<int, int, vector<vector<int>>> node, priority_queue< tuple<int
 		get<1>(new_node) = get<1>(node) +1;
 		get<2>(new_node) = copy;
 		total++;
-		//cout << "move left: " << get<0>(new_node) + get<1>(new_node) << endl;
 		nodes.push(new_node);
 	}
 }
@@ -298,7 +290,7 @@ int misplace(vector<vector<int>> node)
 
 int main()
 {
-	vector< vector<int> > matrix; //creates 2d matrix
+	vector< vector<int> > matrix; //matrix in which data will be stored
 	cout << "Enter your puzzle, use a zero to represent the blank " << endl;
 	cout << "Enter the first row, use space between numbers ";
 	int input1, input2, input3;
@@ -333,12 +325,11 @@ int main()
 	int choice_num = 0;
 	cin >> choice_num;
 
-	auto starttime = chrono::steady_clock().now();
+	//auto starttime = chrono::steady_clock().now();
 	general_search(matrix, choice_num);
-	auto endtime = chrono::steady_clock().now();
-	auto timetook = endtime - starttime;
-	cout << "Elapsed time: " << chrono::duration_cast<chrono::microseconds>(timetook).count() << " ms" << endl;
+	//auto endtime = chrono::steady_clock().now();
+	//auto timetook = endtime - starttime;
+	//cout << "Elapsed time: " << chrono::duration_cast<chrono::microseconds>(timetook).count() << " ms" << endl;
 
-	system("pause");
 	return 0;
 }

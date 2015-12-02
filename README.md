@@ -1,16 +1,16 @@
 # 8-Puzzle
-8-Puzzle solver using A* algorithm with a choice of 3 Heuristics 
-1. Uniform Cost Search
-2. Manhattan Distance
+8-Puzzle solver using A* algorithm with a choice of 3 Heuristics  
+1. Uniform Cost Search  
+2. Manhattan Distance  
 3. Misplaced Tile
 
 ## How to use
 To compile, use the makefile by typing `make` into the terminal window.
-The user will be prompted with directions
-8 puzzles solution will be in the form of
-number|number|number
-number|number|number
-number|number|blank
+The user will be prompted with directions.  
+8 puzzles solution will be in the form of  
+number|number|number  
+number|number|number  
+number|number|blank  
 
 ##notes
 This was done for a Aritifical Intelligence course studying machine learning.
